@@ -1,0 +1,18 @@
+.app_main__note {
+    width: 85vw;
+    margin: 20px auto;
+}
+
+.app_main__note__title {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 10px;
+    color: #fff;
+    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.app_main__note__body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
