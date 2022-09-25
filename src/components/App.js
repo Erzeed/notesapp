@@ -50,7 +50,15 @@ function App() {
           archived: false
       })
       dataNote.push(data)
+      alert('Data berhasil disimpan')
     }
+    setData({
+      id: +new Date(),
+      title: '',
+      body: '',
+      createdAt: new Date().toISOString(),
+      archived: false
+    })
   }
 
   const onHandleForm = (display) => {
@@ -104,7 +112,7 @@ function App() {
       <Navbar onKeyKlik={onHandleSearch}   openForm={() => onHandleForm('block')}/>
       <CardContainer dataNote={showData.filter(e => e.archived === false ? e : '')} onClickBtn={() => onHandleMove('arsip')} onDelete={onHandleDelete} title={"Notes"}/>
       <CardContainer dataNote={showData.filter(e => e.archived === true ? e : '')} onClickBtn={() => onHandleMove('unArsip')} onDelete={onHandleDelete} title={"Arsip"} />
-      <Form title={"Judul"} char={countText} body={"Content"} onCancel={() => onHandleForm('none')} onSubmit={onHandleSubmit} onChange={onHandleChange} />
+      <Form title={data.title} char={countText} content={data.body} onCancel={() => onHandleForm('none')} onSubmit={onHandleSubmit} onChange={onHandleChange}/>
     </div>
   );
 }
