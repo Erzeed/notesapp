@@ -11,29 +11,76 @@
     top: 0;
 }
 
+.topBar.dark {
+    background-color: #000;
+    color: #fff;
+    box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.1);
+}
+
 .topBar > .logo > p {
     font-size: 20px;
 }
 
-.topBar > .nav > .newProject > button {
-    background-color: #2E4ACD;
-    text-align: center;
-    width: 110px;
-    height: 30px;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-    font-size: 13px;
-    margin-right: 10px;
-    border-radius: 2px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-    transform: scale(1);
+.topBar > nav > ul {
+    min-width: 130px;
+    font-size: 1.1em;
+    min-height: 45px;
 }
 
-.topBar > .nav > .newProject:active {
-    transform: scale(.9);
+nav > ul > li {
+    cursor: pointer;
+    padding-right: 15px;
+}
+
+.topBar.dark > nav > ul > li > a {
+    color: #fff;
+}
+
+nav > ul > li > a {
+    color: #000;
+    text-decoration: none;
+}
+
+nav > ul > li > a:hover {
+    color: rgba(0, 0, 0, .7);
+}
+.topBar > nav > ul,
+nav > ul > li,
+.topBar > nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+}
+
+.topBar > nav > .newProject {
+    display: flex;
+}
+
+.topBar > nav > .newProject > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2E4ACD;
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #fff;
+    border: 1.5px solid aqua;
+    cursor: pointer;
+    transform: scale(1);
+    margin: 0 5px;
+}
+
+.topBar.dark > nav > .newProject > button {
+    background-color: #272B33;
+}
+
+.topBar > nav > .newProject > button:hover {
+    transform: scale(1.1);
     box-shadow: none;
+    transition-duration: .1s;
 }
 
 .topBar_searchBar {
@@ -52,4 +99,9 @@
     color: rgba(0, 0, 0,.7);
     background-color: transparent;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.topBar.dark > .topBar_searchBar > input {
+    background-color: #272B33;
+    color: #fff;
 }

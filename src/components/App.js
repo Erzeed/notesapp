@@ -1,119 +1,81 @@
-import React from 'react'
-import { useState } from 'react';
-import '../style/App.css';
-import { CardContainer } from './cardContainer';
-import { Form } from './form';
-import { Navbar } from './navbar';
-import getInitialData from '../utils/data.js'
-
-
+import React, { useState } from "react";
+import "../style/App.css";
+import { Route, Routes } from "react-router-dom";
+import Home from "../pages/Home";
+import Arsip from "../pages/Arsip";
+import Detail from "../pages/Detail";
+import Register from "../pages/Register";
+import Login from "../pages/Login";
+import ProtectedRoute from "../components/ProtectedRoute";
+import ErrorPage from "../pages/errorPage";
+import { LocaleProvider } from "../contexts/locale-contexts";
 
 function App() {
-  
-  const [data,setData] = useState({
-      id: +new Date(),
-      title: '',
-      body: '',
-      createdAt: new Date().toISOString(),
-      archived: false
-  })
+  const [localContext, setLocalContext] = useState({
+    locale: localStorage.getItem("locale"),
+    toggleLocale: () => handleTranslate()
+  });
 
-  const [countText, setCountText] = useState(50)
-  const [dataNote, setdataNote] = useState(getInitialData())
-  const [showData , setShowData] = useState(dataNote)
-  
-  const onHandleChange = (e) => {
-    setData({
-      ...data,
-      [e.target.id] : e.target.value
-    })
-    onHandleCountText(e.target.id ,e.target.value.length)
-  }
-  
-  const onHandleCountText = (columnName,charLength) => {
-    if(columnName === 'title'){
-      setCountText(50 - charLength)
-    }
+  const [thema, setTemaContext] = useState({
+    pageThema: localStorage.getItem("thema"),
+    toggleThema: () => handleThema()
+  });
+
+  const handleTranslate = () => {
+    const prevLanguage = localStorage.getItem("locale");
+    const newLocale = prevLanguage === "id" ? "en" : "id";
+    localStorage.setItem("locale", newLocale);
+    setLocalContext({
+      ...localContext,
+      locale: newLocale,
+    });
   }
 
-  const onHandleSubmit = () => {
-    const time = new Date().toISOString()
-    const {body,title} = data
-
-    if(body === '' || title === ''){
-      alert('Semua kolom harus terisi')
-    }else {
-      setData({
-        ...data,
-          id: +new Date(),
-          createdAt: time,
-          archived: false
-      })
-      dataNote.push(data)
-      alert('Data berhasil disimpan')
-    }
-    setData({
-      id: +new Date(),
-      title: '',
-      body: '',
-      createdAt: new Date().toISOString(),
-      archived: false
-    })
-  }
-
-  const onHandleForm = (display) => {
-    const form = document.querySelector('.container_form')
-    form.style.display = display
-  }
-
-  const onHandleMove = (kategori) => {
-    const id = localStorage.getItem('id')
-    const newData = dataNote.map(e => {
-        if(e.id == id){
-            if(kategori === 'arsip'){
-                return {...e, archived: true}
-            }else if(kategori === 'unArsip'){
-              return {...e, archived: false}
-            }
-          }
-        return e
-    })
-    setdataNote(newData)
-    setShowData(newData)
-  }
-
-  const onHandleDelete = _ => {
-    const id = localStorage.getItem('id')
-    const arr = []
-    dataNote.map(e => {
-      if(id != e.id){
-        arr.push(e)
-      }
-    })
-    setdataNote(arr)
-    setShowData(arr)
-  }
-
-  const onHandleSearch = event => {
-    const text = event.target.value
-    const arr = []
-    dataNote.filter(e => {
-      if(e.title.toLowerCase().includes(text.toLowerCase())){
-        arr.push(e)
-        setShowData(arr)
-      }else {
-        setShowData(arr)
-      }
-    })
-  }
-
+  const handleThema = () => {
+    const prevThema = localStorage.getItem("thema");
+    const newThema = prevThema === "dark" ? "light" : "dark";
+    localStorage.setItem("thema", newThema);
+    setTemaContext({
+      ...thema,
+      pageThema: newThema,
+    });
+  };
   return (
-    <div className="App">
-      <Navbar onKeyKlik={onHandleSearch}   openForm={() => onHandleForm('block')}/>
-      <CardContainer dataNote={showData.filter(e => e.archived === false ? e : '')} onClickBtn={() => onHandleMove('arsip')} onDelete={onHandleDelete} title={"Notes"}/>
-      <CardContainer dataNote={showData.filter(e => e.archived === true ? e : '')} onClickBtn={() => onHandleMove('unArsip')} onDelete={onHandleDelete} title={"Arsip"} />
-      <Form title={data.title} char={countText} content={data.body} onCancel={() => onHandleForm('none')} onSubmit={onHandleSubmit} onChange={onHandleChange}/>
-    </div>
+    <LocaleProvider value={{ localContext, thema }}>
+      <div className={`App ${thema.pageThema}`}>
+        <main>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/arsip"
+              element={
+                <ProtectedRoute>
+                  <Arsip />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/detail/:id"
+              element={
+                <ProtectedRoute>
+                  <Detail />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </main>
+      </div>
+    </LocaleProvider>
   );
 }
 

@@ -7,9 +7,16 @@
     width: 80%;
     height: 80%;
     z-index: 10;
+    border-radius: 5px;
     background-color: #fff;
     font-family: 'Roboto Mono', monospace;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.container_form.dark {
+    background-color: #0F0E0E;
+    color: #fff;
+    box-shadow: 5px 5px 20px rgba(255, 255, 255, 0.1);
 }
 
 .container_form > form {
@@ -23,6 +30,13 @@
 .container_form > form > input {
     width: 100%;
     height: 35px;
+}
+
+.container_form.dark  > form > input,
+.container_form.dark > form > textarea,
+.container_form.dark > .container_form__action > button {
+    background-color: #272b33;
+    color: #fff;
 }
 
 .container_form > form > textarea ,

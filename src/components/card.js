@@ -1,8 +1,10 @@
 import React from "react";
 import "../style/card.css";
-import Archive from '../asset/icon/arsip.svg'
-import Unarchive from '../asset/icon/unarsive.svg'
-import Trash from '../asset/icon/trash.svg'
+import Archive from '../asset/icon/arsip.svg';
+import Unarchive from '../asset/icon/unarsive.svg';
+import Trash from '../asset/icon/trash.svg';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 
 export const Card = ({ title, body, createdAt, archived, id, onClickArchive,onClickBtn,onDelete }) => {
@@ -41,7 +43,9 @@ export const Card = ({ title, body, createdAt, archived, id, onClickArchive,onCl
                 <p>{showFormattedDate(createdAt)}</p>
             </div>
             <div className="card_title">
-                <h2>{limitBodyText(title,16)}</h2>
+                <h2>
+                    <Link to={`/detail/${id}`}>{limitBodyText(title,16)}</Link>
+                </h2>
             </div>
             <div className="card_subtitle">
                 <p>{limitBodyText(body,100)}</p>
@@ -57,4 +61,15 @@ export const Card = ({ title, body, createdAt, archived, id, onClickArchive,onCl
             </div>
         </div>
     );
+};
+
+Card.propTypes = {
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    archived: PropTypes.bool.isRequired,
+    id: PropTypes.string.isRequired,
+    onClickArchive: PropTypes.func.isRequired,
+    onClickBtn: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
 };
