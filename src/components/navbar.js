@@ -14,6 +14,7 @@ import { LocaleConsumer } from "../contexts/locale-contexts";
 export const Navbar = ({ openForm, onKeyKlik, isLogin }) => {
   const navigate = useNavigate();
   const handlLogOut = () => {
+    
     const logOut = confirm("Anda yakin ingin keluar");
     if (logOut) {
       localStorage.removeItem("accessToken");

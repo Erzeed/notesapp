@@ -3,6 +3,10 @@
     margin: 20px auto;
 }
 
+.app_main__note.dark > .app_main__note__body > p.text {
+    color: #ffff;
+}
+
 .app_main__note__title {
     font-size: 1.1em;
     font-weight: bold;

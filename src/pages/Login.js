@@ -1,16 +1,19 @@
 import React from "react";
-// import { useState, useEffect } from "react";
 import { Buttom } from "../components/button";
 import useDataInput from "../utils/custom-hooks";
 import { useNavigate } from "react-router-dom";
-import { login, putAccessToken } from "../utils/data-api";
+import { login } from "../utils/data-api";
 import { Navbar } from "../components/navbar";
 import { LocaleConsumer } from "../contexts/locale-contexts";
+import { putAccessToken } from "../utils/data-api";
+import { loading } from "../utils/custom-toast";
 import "../style/register.css";
 
 function Login() {
   const navigate = useNavigate();
   const [dataUser, setInputData] = useDataInput();
+  document.title = "Login";
+
   const onHandleChange = (data) => {
     setInputData(data);
   };
@@ -18,9 +21,13 @@ function Login() {
   const onHandleSubmit = async () => {
     const response = await login(dataUser);
     if (response.error === false) {
-      alert("succes");
+      loading("Loading login", response);
       putAccessToken(response.data.accessToken);
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 1610);
+    } else {
+      loading("Loading login", response);
     }
   };
 
@@ -31,8 +38,8 @@ function Login() {
   return (
     <LocaleConsumer>
       {({ localContext, thema }) => {
-        const {locale} = localContext;
-        const {pageThema} = thema;
+        const { locale } = localContext;
+        const { pageThema } = thema;
         return (
           <div className={`container ${pageThema} login`}>
             <Navbar isLogin={false} />
@@ -57,10 +64,11 @@ function Login() {
               <Buttom
                 onClick={onHandleSubmit}
                 title={locale === "id" ? "Masuk" : "Login"}
-                // loading={this.props.isLoading}
               />
               <div className="loginAccount">
-                <p onClick={onRegister}>{locale === "id" ? "Daftar Sekarang" : "Register Now"}</p>
+                <p onClick={onRegister}>
+                  {locale === "id" ? "Daftar Sekarang" : "Register Now"}
+                </p>
               </div>
             </div>
           </div>

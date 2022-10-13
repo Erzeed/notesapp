@@ -1,4 +1,3 @@
-
 const BASE_URL = 'https://notes-api.dicoding.dev/v1';
 
 
@@ -32,11 +31,10 @@ async function login({ email, password }) {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    alert(responseJson.message);
-    return { error: true, data: null };
+    return { error: responseJson.message, data: null };
   }
 
-  return { error: false, data: responseJson.data };
+  return { error: false, data: responseJson.data, message:"Login Succes" };
 }
 
 async function register({ name, email, password }) {
@@ -51,11 +49,10 @@ async function register({ name, email, password }) {
   const responseJson = await response.json();
 
   if (responseJson.status !== 'success') {
-    alert(responseJson.message);
-    return { error: true };
+    return { error: responseJson.message};
   }
 
-  return { error: false };
+  return { error: false ,message:"Register Succes"};
 }
 
 async function getUserLogged() {

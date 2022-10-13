@@ -17,4 +17,11 @@
     background-image: none;
 }
 
+.swal2-styled.swal2-confirm,
+.swal2-popup.swal2-toast .swal2-styled {
+    width: 60px;
+    height: 30px;
+    font-size: .8em !important;
+}
+
 

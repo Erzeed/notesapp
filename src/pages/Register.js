@@ -1,11 +1,11 @@
 import React from "react";
-// import { useState, useEffect } from "react";
 import { Buttom } from "../components/button";
 import useDataInput from "../utils/custom-hooks";
 import { register } from "../utils/data-api";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/navbar";
 import { LocaleConsumer } from "../contexts/locale-contexts";
+import { loading } from "../utils/custom-toast";
 import "../style/register.css";
 
 function Register() {
@@ -14,12 +14,17 @@ function Register() {
   const onHandleChange = (data) => {
     setInputData(data);
   };
+  document.title = "Register";
 
   const onHandleSubmit = async () => {
     const response = await register(dataUser);
     if (response.error === false) {
-      alert("succes");
-      navigate("/login");
+      loading("Loading register", response);
+      setTimeout(() => {
+        navigate("/login");
+      }, 1610);
+    } else {
+      loading("Loading register", response);
     }
   };
 
@@ -30,8 +35,8 @@ function Register() {
   return (
     <LocaleConsumer>
       {({ localContext, thema }) => {
-        const {locale} = localContext;
-        const {pageThema} = thema;
+        const { locale } = localContext;
+        const { pageThema } = thema;
         return (
           <div className={`container ${pageThema} register`}>
             <Navbar isLogin={false} />
@@ -63,7 +68,6 @@ function Register() {
               <Buttom
                 onClick={onHandleSubmit}
                 title={locale === "id" ? "Daftar" : "Register"}
-                // loading={this.props.isLoading}
               />
               <div className="registerNewAccount">
                 <p onClick={onNewLogin}>

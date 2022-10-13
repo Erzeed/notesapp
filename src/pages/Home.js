@@ -11,6 +11,7 @@ import {
   deleteNote,
 } from "../utils/data-api";
 import { useSearchParams } from "react-router-dom";
+import { LocaleConsumer } from "../contexts/locale-contexts";
 
 function Home() {
   const [data, setData] = useState({
@@ -88,27 +89,33 @@ function Home() {
   };
 
   return (
-    <div className="home">
-      <Navbar
-        onKeyKlik={onHandleSearch}
-        isLogin={true}
-        openForm={() => onHandleForm("block")}
-      />
-      <CardContainer
-        dataNote={dataNote}
-        onClickBtn={() => onHandleMove("arsip")}
-        onDelete={onHandleDelete}
-        title={"Notes"}
-      />
-      <Form
-        title={data.title}
-        char={countText}
-        content={data.body}
-        onCancel={() => onHandleForm("none")}
-        onSubmit={onHandleSubmit}
-        onChange={onHandleChange}
-      />
-    </div>
+    <LocaleConsumer>
+      {({ locale }) => {
+        return (
+          <div className="home">
+            <Navbar
+              onKeyKlik={onHandleSearch}
+              isLogin={true}
+              openForm={() => onHandleForm("block")}
+            />
+            <CardContainer
+              dataNote={dataNote}
+              onClickBtn={() => onHandleMove("arsip")}
+              onDelete={onHandleDelete}
+              title={locale === "id" ? "Catatan" : "Notes"}
+            />
+            <Form
+              title={data.title}
+              char={countText}
+              content={data.body}
+              onCancel={() => onHandleForm("none")}
+              onSubmit={onHandleSubmit}
+              onChange={onHandleChange}
+            />
+          </div>
+        );
+      }}
+    </LocaleConsumer>
   );
 }
 

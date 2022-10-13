@@ -11,10 +11,11 @@ export const CardContainer = ({ title, dataNote, onClickBtn, onDelete }) => {
 
   return (
     <LocaleConsumer>
-      {({ localContext }) => {
+      {({ thema, localContext }) => {
         const {locale} = localContext;
+        const {pageThema} = thema;
         return (
-          <div className="app_main__note">
+          <div className={`app_main__note ${pageThema}`}>
             <div className="app_main__note__title">
               <h3>{title}</h3>
             </div>
@@ -33,10 +34,10 @@ export const CardContainer = ({ title, dataNote, onClickBtn, onDelete }) => {
                     );
                   })
                 ) : (
-                  <p>{locale === 'id' ? 'Data tidak ditemukan' : 'Data not found'}</p>
+                  <p className="text">{locale === 'id' ? 'Data tidak ditemukan' : 'Data not found'}</p>
                 )
               ) : (
-                <p>{locale === 'id' ? 'Data kosong' : 'Empty data'}</p>
+                <p className="text">{locale === 'id' ? 'Data kosong' : 'Empty data'}</p>
               )}
             </div>
           </div>
