@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
 import { Navigate } from "react-router-dom";
-import {getUserLogged} from "../utils/data-api"
+import {getUserLogged} from "../utils/data-api";
+import PropTypes from "prop-types";
+
 const Protected = ({ children }) => {
   const [error, setError] = useState(null);
   useEffect(() => {
@@ -14,5 +16,9 @@ const Protected = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
   return children;
+};
+
+Protected.propTypes = {
+  children: PropTypes.object.isRequired,
 };
 export default Protected;

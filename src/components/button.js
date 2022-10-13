@@ -1,9 +1,11 @@
 import React from 'react'
-
+import PropTypes from "prop-types";
 
 export const Buttom = ({onClick, title}) => {
-    // if(loading) {
-    //     return <button className='disable'>Loading...</button>
-    // }
     return <button onClick={onClick}>{title}</button>
 }
+
+Buttom.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired
+  };
